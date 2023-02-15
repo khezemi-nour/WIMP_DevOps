@@ -18,7 +18,7 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
       - name: Integration 
         working-directory: ./gateway
-        run: npm ci 
+        run: cd ./gateway && npm ci 
       - name: Install dependency
         working-directory: ./gateway
         run: npm install
