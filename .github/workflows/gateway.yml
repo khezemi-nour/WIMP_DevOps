@@ -18,6 +18,8 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
       - name : List *
         run : ls -l
+      - name : Go to directory 
+        run : cd gateway
       - name: Integration 
         working-directory: ./gateway
         run: cd ./gateway && npm ci 
