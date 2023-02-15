@@ -16,9 +16,10 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
-      - name: Integration 
-        working-directory: ./gateway
-        run: npm ci 
+      - name : List *
+        run : ls -l
+      - name : Go to directory 
+        run : cd gateway
       - name: Install dependency
         working-directory: ./gateway
         run: npm install

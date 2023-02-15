@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd gateway && npm ci
-    - run: cd gateway && npm run build --if-present
-    - run: cd gateway && npm test
+    - run: ls -l
+    - run: npm run build --if-present
+      working-directory: gateway
+    - run: npm test
+      working-directory: gateway
