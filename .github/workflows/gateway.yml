@@ -22,7 +22,6 @@ jobs:
       - name: Install dependency
         working-directory: ./gateway
         run: npm install
-        working-directory: gateway
       - name: Build
         run: npm run build --if-present
         working-directory: gateway
