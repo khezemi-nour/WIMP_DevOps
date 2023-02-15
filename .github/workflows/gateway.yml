@@ -20,9 +20,6 @@ jobs:
         run : ls -l
       - name : Go to directory 
         run : cd gateway
-      - name: Integration 
-        working-directory: ./gateway
-        run: cd ./gateway && npm ci 
       - name: Install dependency
         working-directory: ./gateway
         run: npm install
