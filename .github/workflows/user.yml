@@ -10,8 +10,8 @@ jobs:
       contents: read
       packages: write
     services:
-       mongodb:
-        image: mongo
+      mongodb:
+        image: mongo:latest
         ports:
           - 27017:27017
         options: >-
@@ -20,24 +20,22 @@ jobs:
           --health-timeout 5s
           --health-retries 3
     steps:
-      - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: "16.x"
-          registry-url: "https://npm.pkg.github.com"
-          # Defaults to the user or organization that owns the workflow file
-      - name: List *
+          node-version: '16.x'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: List files
         run: ls -l
       - name: Go to directory
         run: cd users
-      - name: Install dependency
-        working-directory: ./users
+      - name: Install dependencies
         run: npm install
+        working-directory: users
       - name: Wait for MongoDB to start
-        run: npm wait-for-mongo
-      - name: TEST
-        env:
-          mongoDbUrl: mongodb://localhost:27017/test
+        run: npm run wait-for-mongo
+      - name: Run tests
         run: npm test
         working-directory: users
+        env:
+          mongoDbUrl: mongodb://localhost:27017/test
