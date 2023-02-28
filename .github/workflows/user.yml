@@ -2,20 +2,21 @@ name: User Service
 on:
   push:
     branches: [main, user-service-v1]
-services:
-  mongodb:
-    image: mongo
-    ports:
-      - 27017/tcp
-    env:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017/tcp
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - uses: actions/checkout@v3
       # Setup .npmrc file to publish to GitHub Packages
