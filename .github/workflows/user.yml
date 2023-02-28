@@ -1,7 +1,15 @@
 name: User Service
 on:
   push:
-    branches: [main,user-service-v1]
+    branches: [main, user-service-v1]
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017/tcp
+    env:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,16 +21,18 @@ jobs:
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://npm.pkg.github.com'
+          node-version: "16.x"
+          registry-url: "https://npm.pkg.github.com"
           # Defaults to the user or organization that owns the workflow file
-      - name : List *
-        run : ls -l
-      - name : Go to directory 
-        run : cd users
+      - name: List *
+        run: ls -l
+      - name: Go to directory
+        run: cd users
       - name: Install dependency
         working-directory: ./users
         run: npm install
       - name: TEST
+        env:
+          mongoDbUrl: mongodb://root:example@localhost:27017/test
         run: npm test
         working-directory: users
