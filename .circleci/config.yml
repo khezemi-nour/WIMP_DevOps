@@ -7,8 +7,15 @@ version: 2.1
 services:
   mongodb:
     image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: test
     ports:
       - 27017:27017
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
