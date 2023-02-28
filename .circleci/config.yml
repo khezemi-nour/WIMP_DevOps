@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
+  gateway:
     docker:
       - image: circleci/node:16
     working_directory: ~/repo
@@ -17,12 +17,12 @@ jobs:
           keys:
             - dependency-cache-{{ checksum "package-lock.lock" }}
             - dependency-cache-
-      - run: npm install
+      - run: cd gateway && npm install
       - save_cache:
           paths:
             - node_modules
           key: dependency-cache-{{ checksum "package-lock.lock" }}
-      - run: npm test
+      - run: cd gateway && npm test
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -42,3 +42,4 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+      - gateway
