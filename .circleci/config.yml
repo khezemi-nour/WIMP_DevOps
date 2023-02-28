@@ -33,11 +33,20 @@ jobs:
   users:
 
     docker:
-      - image: circleci/node:16      
+      - image: circleci/node:16
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     environment:
       mongoDbUrl: mongodb://localhost:27017/test
     steps:
+      - setup_remote_docker
+      - run:
+          name: Waiting for Mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - run:
+          name: Install mongo client
+          command: |
+            sudo apt-get install -y mongodb
       - checkout
       - when:
           condition:
