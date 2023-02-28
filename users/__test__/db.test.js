@@ -28,7 +28,7 @@ async function close() {
 let mongoServer;
 
 beforeAll(async () => {
-  mongoServer = new MongoMemoryServer();
+  mongoServer = await MongoMemoryServer.create();
   const uri = await mongoServer.getUri();
   process.env.MONGODB_URI = uri;
 });
