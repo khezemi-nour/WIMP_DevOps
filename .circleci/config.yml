@@ -45,3 +45,5 @@ workflows:
     jobs:
       - say-hello
       - gateway
+      - users:
+          config: .circleci/user.config.yml

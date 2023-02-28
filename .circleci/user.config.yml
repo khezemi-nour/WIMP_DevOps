@@ -1,0 +1,36 @@
+version: 2.1
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:16
+    working_directory: ~/repo
+    environment:
+      - mongoDbUrl: mongodb://localhost:27017/test
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            cd users
+            npm install
+      - run:
+          name: Wait for MongoDB to start
+          command: |
+            cd users
+            npm run wait-for-mongo
+      - run:
+          name: Run tests
+          command: |
+            cd users
+            npm test
