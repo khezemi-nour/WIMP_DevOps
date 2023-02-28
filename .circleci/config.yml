@@ -43,10 +43,10 @@ jobs:
       - run:
           name: Waiting for Mongo
           command: dockerize -wait tcp://localhost:27017 -timeout 1m
-      - run:
-          name: Install mongo client
-          command: |
-            sudo apt-get install -y mongodb
+      # - run:
+      #     name: Install mongo client
+      #     command: |
+      #       sudo apt-get install -y mongodb
       - checkout
       - when:
           condition:
