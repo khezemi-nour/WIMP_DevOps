@@ -19,6 +19,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
