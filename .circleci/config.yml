@@ -2,6 +2,18 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+# Define the service for the JOBS to be used
+
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -16,15 +28,34 @@ jobs:
       - run: cd gateway && npm install
       - run: cd gateway && npm test
   users:
+    filters:
+      branches:
+        only:
+          - main
+          - user-service-v1
     docker:
       - image: circleci/node:16
     working_directory: ~/repo
+    environment:
+      - mongoDbUrl: mongodb://localhost:27017/test
     steps:
       - checkout
-      - run: ls -l
-      - run: cd users
-      - run: cd users && npm install
-      - run: cd users && npm test
+      - run:
+          name: Install Dependencies
+          command: |
+            cd users
+            npm install
+      - run:
+          name: Wait for MongoDB to start
+          command: |
+            cd users
+            npm run wait-for-mongo
+      - run:
+          name: Run tests
+          command: |
+            cd users
+            npm test
+
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -45,5 +76,4 @@ workflows:
     jobs:
       - say-hello
       - gateway
-      - users:
-          config: .circleci/configUser.yml
+      - users
