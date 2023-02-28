@@ -7,12 +7,15 @@ version: 2.1
 services:
   mongodb:
     image: mongo:latest
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_DATABASE: test
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -28,28 +31,41 @@ jobs:
       - run: cd gateway && npm install
       - run: cd gateway && npm test
   users:
-    filters:
-      branches:
-        only:
-          - main
-          - user-service-v1
+
     docker:
       - image: circleci/node:16
+      - image: circleci/mongo:latest
     working_directory: ~/repo
     environment:
-      - mongoDbUrl: mongodb://localhost:27017/test
+      mongoDbUrl: mongodb://localhost:27017/test
     steps:
+      - setup_remote_docker
+      - run:
+          name: Waiting for Mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      # - run:
+      #     name: Install mongo client
+      #     command: |
+      #       sudo apt-get install -y mongodb
       - checkout
+      - when:
+          condition:
+            equal: [ main, user-service-v1 ]
+          steps:
+            - run: echo "I am on main"
       - run:
           name: Install Dependencies
           command: |
             cd users
             npm install
+      # - run:
+      #     name: Wait for MongoDB to start
+      #     command: |
+      #       cd users
+      #       npm run wait-for-mongo
       - run:
           name: Wait for MongoDB to start
-          command: |
-            cd users
-            npm run wait-for-mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
       - run:
           name: Run tests
           command: |
