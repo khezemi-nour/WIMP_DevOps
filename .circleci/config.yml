@@ -8,10 +8,13 @@ orbs:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build_and_test: # this can be any name you choose
-    executor: node/default # use the default executor defined within the orb
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
     steps:
       - checkout
       - node/install-packages:
+          app-dir: ./gateway 
           pkg-manager: npm
       - run:
           command: npm run test
