@@ -46,11 +46,11 @@ jobs:
           command: |
             cd users
             npm install
-      - run:
-          name: Wait for MongoDB to start
-          command: |
-            cd users
-            npm run wait-for-mongo
+      # - run:
+      #     name: Wait for MongoDB to start
+      #     command: |
+      #       cd users
+      #       npm run wait-for-mongo
       - run:
           name: Run tests
           command: |
