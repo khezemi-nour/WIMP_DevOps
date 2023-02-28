@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env' )});
 
-mongoose.connect(process.env.mongoDbUrl,{ useUnifiedTopology: true });
+mongoose.connect(process.env.mongoDbUrl || "mongodb://localhost:27017/myapp",{ useUnifiedTopology: true });
 const Schema = mongoose.Schema;
 
 const identiySchema = new Schema({
