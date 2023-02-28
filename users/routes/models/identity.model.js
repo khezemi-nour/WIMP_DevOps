@@ -62,13 +62,14 @@ exports.list = (perPage, page) => {
         Identity.find()
             .limit(perPage)
             .skip(perPage * page)
-            .exec(function (err, users) {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(users);
-                }
-            })
+
+            .exec().then((users)  => {
+                resolve(users);
+                
+            }).catch((err) => { 
+                reject(err);
+
+             }) 
     });
 };
 
