@@ -3,7 +3,7 @@
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb://localhost:27017/myapp'; // your MongoDB URI
+const uri = process.env.mongoDbUrl || 'mongodb://localhost:27017/myapp'; // your MongoDB URI
 let client;
 
 async function connect() {
