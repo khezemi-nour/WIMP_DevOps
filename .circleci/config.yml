@@ -9,10 +9,6 @@ services:
     image: mongo:latest
     ports:
       - 27017:27017
-    environment:
-      MONGO_INITDB_DATABASE: test
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -51,6 +47,9 @@ jobs:
       #     command: |
       #       cd users
       #       npm run wait-for-mongo
+      - run:
+          name: Wait for MongoDB to start
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
       - run:
           name: Run tests
           command: |
