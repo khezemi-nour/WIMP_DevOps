@@ -28,18 +28,19 @@ jobs:
       - run: cd gateway && npm install
       - run: cd gateway && npm test
   users:
-    filters:
-      branches:
-        only:
-          - main
-          - user-service-v1
+
     docker:
-      - image: circleci/node:16
+      - image: circleci/node:16      
     working_directory: ~/repo
     environment:
-      - mongoDbUrl: mongodb://localhost:27017/test
+      mongoDbUrl: mongodb://localhost:27017/test
     steps:
       - checkout
+      - when:
+          condition:
+            equal: [ main, user-service-v1 ]
+          steps:
+            - run: echo "I am on main"
       - run:
           name: Install Dependencies
           command: |
