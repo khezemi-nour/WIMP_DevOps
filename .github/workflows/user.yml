@@ -13,7 +13,7 @@ jobs:
       mongodb:
         image: mongo:latest
         ports:
-          - 27017:27017
+          - 27017:tcp
         options: >-
           --health-cmd 'mongo --eval "db.runCommand({ ping: 1 })"'
           --health-interval 10s
