@@ -15,13 +15,13 @@ jobs:
       - run: cd gateway
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-{{ checksum "package-lock.lock" }}
             - dependency-cache-
-      - run: yarn install
+      - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: dependency-cache-{{ checksum "package-lock.lock" }}
       - run: npm test
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
