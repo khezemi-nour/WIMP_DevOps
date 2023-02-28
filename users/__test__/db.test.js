@@ -2,8 +2,10 @@
 
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { MongoClient } = require('mongodb');
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../.env' )});
 
-const uri = process.env.mongoDbUrl || 'mongodb://localhost:27017/myapp'; // your MongoDB URI
+const uri = process.env.mongoDbUrl || 'mongodb://root:example@localhost:27017/test'; // your MongoDB URI
 let client;
 
 async function connect() {
@@ -29,8 +31,7 @@ let mongoServer;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
-  const uri = await mongoServer.getUri();
-  process.env.MONGODB_URI = uri;
+  process.env.mongoDbUrl = await mongoServer.getUri();
 });
 
 afterAll(async () => {
