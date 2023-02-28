@@ -5,6 +5,26 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
+  gateway:
+    docker:
+      - image: circleci/node:16
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: ls -l
+      - run: cd gateway
+      - run: cd gateway && npm install
+      - run: cd gateway && npm test
+  users:
+    docker:
+      - image: circleci/node:16
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: ls -l
+      - run: cd users
+      - run: cd users && npm install
+      - run: cd users && npm test
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -24,3 +44,4 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
+      - gateway
