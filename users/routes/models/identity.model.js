@@ -57,4 +57,18 @@ exports.createIdentity = (userData) => {
     return user.save();
 };
 
+exports.list = (perPage, page) => {
+    return new Promise((resolve, reject) => {
+        Identity.find()
+            .limit(perPage)
+            .skip(perPage * page)
+            .exec(function (err, users) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(users);
+                }
+            })
+    });
+};
 

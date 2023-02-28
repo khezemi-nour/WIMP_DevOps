@@ -1,5 +1,3 @@
-//const config = require('./env.config.js');
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -24,7 +22,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json());
 IdentityRouter.routesConfig(app);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
   });
 
