@@ -13,4 +13,11 @@ exports.routesConfig = (app) => {
         IdentityProvider.getById
     ]);
     
+    app.put('/users/:userId', [
+        IdentityProvider.putById
+    ]);
+
+    app.delete('/users/:userId', [
+        IdentityProvider.removeById
+    ]);
 };
