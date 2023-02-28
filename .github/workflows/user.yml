@@ -10,13 +10,15 @@ jobs:
       contents: read
       packages: write
     services:
-      mongodb:
+       mongodb:
         image: mongo
         ports:
-          - 27017/tcp
-        env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: example
+          - 27017:27017
+        options: >-
+          --health-cmd 'mongo --eval "db.runCommand({ ping: 1 })"'
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
     steps:
       - uses: actions/checkout@v3
       # Setup .npmrc file to publish to GitHub Packages
@@ -32,8 +34,10 @@ jobs:
       - name: Install dependency
         working-directory: ./users
         run: npm install
+      - name: Wait for MongoDB to start
+        run: npm wait-for-mongo
       - name: TEST
         env:
-          mongoDbUrl: mongodb://root:example@localhost:27017/test
+          mongoDbUrl: mongodb://localhost:27017/test
         run: npm test
         working-directory: users
