@@ -92,3 +92,24 @@ describe("delete/usersbyid", () => {
   });
 });
 
+describe("POST/auth", () => {
+  test("creates a new user", async () => {
+    const user = {
+      firstName: "admin2",
+      lastName: "admin2",
+      userName: "admin2",
+      password: "admin2",
+      permissionLevel: 1,
+    };
+    const resp = await request(app).post("/users").send(user).expect(201);
+    const response = await request(app).post("/auth").send({
+      username : 'admin2',
+      password : 'admin2'
+    }).expect(201);
+
+    expect(response.body).toHaveProperty('accessToken');
+    expect(response.body).toHaveProperty('refreshToken') 
+  });
+});
+
+
