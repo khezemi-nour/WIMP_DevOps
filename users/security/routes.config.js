@@ -1,4 +1,4 @@
-const IdentityChecker = require('./authentication/identity.checker');
+const IdentityChecker = require('./authentication/Identity.checker');
 const Authenticator = require('./authentication/authentication.handler');
 
 
