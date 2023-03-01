@@ -1,5 +1,5 @@
-const IdentityChecker = require('./security/authentication/identity.checker');
-const Authenticator = require('./security/authentication/authentication.handler');
+const IdentityChecker = require('./authentication/identity.checker');
+const Authenticator = require('./authentication/authentication.handler');
 
 
 exports.routesConfig = function (app) {
