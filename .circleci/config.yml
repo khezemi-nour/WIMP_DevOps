@@ -68,7 +68,7 @@ jobs:
           command: dockerize -wait tcp://localhost:27017 -timeout 1m
       - run : 
           name : Check the file exists in Security 
-          command: cd user && cd security && cd authentication && ls -l  
+          command: cd users && cd security && cd authentication && ls -l  
       - run:
           name: Run tests
           command: |
