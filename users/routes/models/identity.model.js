@@ -75,23 +75,28 @@ exports.list = (perPage, page) => {
 
 exports.putIdentity = (id,data) => {
     return new Promise((resolve, reject) => {
-        Identity.findByIdAndUpdate(id,data,function (err,user) {
-            if (err) reject(err);
-            resolve(user);
-        });
+        Identity.findByIdAndUpdate(id,data).then(
+           function(user) {
+               return resolve(user);
+        
+        }).catch((err) => { 
+        reject(err);
+
+     }) 
     });
 };
 
 
 exports.removeById = (id) => {
     return new Promise((resolve, reject) => {
-        Identity.remove({_id: id}, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(err);
-            }
-        });
+        Identity.deleteOne({_id: id}).then(
+            function(user) {
+                return resolve(user);
+         
+         }).catch((err) => { 
+         reject(err);
+ 
+      })      
     });
 };
 
