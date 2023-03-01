@@ -54,3 +54,41 @@ describe("GET /usersbyid", () => {
   
   });
 });
+describe("put/usersbyid", () => {
+  test("update user by id", async () => {
+
+    
+    const user = {
+      firstName: "admin",
+      lastName: "admin",
+      userName: "admin",
+      password: "admin",
+      permissionLevel: 1,
+    };
+    const response = await request(app).post("/users").send(user).expect(201);
+      
+    const rp = await request(app).put( `/users/${response.body.id}`).send({firstName:"Name2"}).expect(204);
+
+  
+  });
+});
+
+describe("delete/usersbyid", () => {
+  test("delete user by id", async () => {
+
+    
+    const user = {
+      firstName: "admin",
+      lastName: "admin",
+      userName: "admin",
+      password: "admin",
+      permissionLevel: 1,
+    };
+    const response = await request(app).post("/users").send(user).expect(201);
+      
+    const rp = await request(app).delete( `/users/${response.body.id}`).expect(204);
+
+  
+  });
+});
+
