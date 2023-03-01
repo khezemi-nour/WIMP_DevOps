@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const IdentityRouter = require('./routes/routes.config');
+const SecurityRouter = require('./security/routes.config');
 
 const path = require('path');
 
@@ -21,7 +22,7 @@ app.use(function (req, res, next) {
     });
 app.use(bodyParser.json());
 IdentityRouter.routesConfig(app);
-
+SecurityRouter.routesConfig(app);
 app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
   });
