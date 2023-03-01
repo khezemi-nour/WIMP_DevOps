@@ -12,7 +12,7 @@ exports.login = (req, res) => {
         let refreshId = req.body.userId + refresh_secret + req.body.jti;
         let salt = crypto.randomBytes(16).toString('base64');
         let hash = crypto.createHmac('sha512', salt).update(refreshId).digest("base64");
-        let token = jwt.sign(req.body, cert, { algorithm: 'RS512'});
+        let token = refresh_secret;
         let refresh_token = salt+'$'+hash;
         res.status(201).send({accessToken: token, refreshToken: refresh_token});
     } catch (err) {
