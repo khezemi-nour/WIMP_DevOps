@@ -33,8 +33,9 @@ setupProxies(app,routes);
 // Setting up the bodyParser for the specific endpoint
 setupBodyParser(app,routes);
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
+
   });
 
 module.exports = app;

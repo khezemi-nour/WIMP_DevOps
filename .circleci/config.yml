@@ -2,6 +2,21 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+# Define the service for the JOBS to be used
+
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: test
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -13,16 +28,50 @@ jobs:
       - checkout
       - run: ls -l
       - run: cd gateway
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "package-lock.lock" }}
-            - dependency-cache-
       - run: cd gateway && npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependency-cache-{{ checksum "package-lock.lock" }}
       - run: cd gateway && npm test
+  users:
+
+    docker:
+      - image: circleci/node:16
+      - image: circleci/mongo:latest
+    working_directory: ~/repo
+    environment:
+      mongoDbUrl: mongodb://localhost:27017/test
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Waiting for Mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      # - run:
+      #     name: Install mongo client
+      #     command: |
+      #       sudo apt-get install -y mongodb
+      - checkout
+      - when:
+          condition:
+            equal: [ main, user-service-v1 ]
+          steps:
+            - run: echo "I am on main"
+      - run:
+          name: Install Dependencies
+          command: |
+            cd users
+            npm install
+      # - run:
+      #     name: Wait for MongoDB to start
+      #     command: |
+      #       cd users
+      #       npm run wait-for-mongo
+      - run:
+          name: Wait for MongoDB to start
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - run:
+          name: Run tests
+          command: |
+            cd users
+            npm test
+
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -43,3 +92,4 @@ workflows:
     jobs:
       - say-hello
       - gateway
+      - users

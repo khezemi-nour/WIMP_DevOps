@@ -6,17 +6,40 @@
 # https://github.com/actions/labeler
 
 name: Labeler
-on: [pull_request_target]
+
+on:
+  issues:
+    types: [opened, edited]
 
 jobs:
-  label:
-
+  labeler:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-
     steps:
-    - uses: actions/labeler@v4
+    - uses: actions/checkout@v2
+    - name: Check for bug label
+      run: |
+        if (grep -q "bug" $GITHUB_EVENT_PATH); then
+          echo "Bug label found"
+          exit 0
+        else
+          echo "No bug label found"
+          exit 1
+        fi
+      env:
+        GITHUB_EVENT_PATH: ${{ github.event_path }}
+    - name: Add "needs-triage" label
+      if: ${{ !contains(github.event.issue.labels.*.name, 'needs-triage') }}
+      uses: peter-evans/create-issue-label@v2
       with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        color: FFFFFF
+        description: Needs triage
+        name: needs-triage
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Remove "bug" label
+      if: ${{ contains(github.event.issue.labels.*.name, 'bug') }}
+      uses: peter-evans/create-issue-label@v2
+      with:
+        color: 000000
+        name: bug
+        token: ${{ secrets.GITHUB_TOKEN }}
+        delete: true
