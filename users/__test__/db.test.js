@@ -38,7 +38,7 @@ let mongoServer;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
-  process.env.mongoDbUrl = await mongoServer.getUri();
+  process.env.mongoDbUrl = mongoServer.getUri();
   await clearAllCollections ();
 
 });
