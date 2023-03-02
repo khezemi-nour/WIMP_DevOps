@@ -33,7 +33,7 @@ exports.refresh_token = (req, res) => {
     }
 };
 
-exports.resetRefreshSecret = (req, res) => {
+exports.resetRefreshSecret = (_req, res) => {
     try {
         config.initRefreshSecret();
         res.status(204).send({});
