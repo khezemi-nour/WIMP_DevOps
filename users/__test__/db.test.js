@@ -16,6 +16,17 @@ async function connect() {
   return client.db();
 }
 
+async function clearAllCollections() {
+  if(client){
+    const db = await client.db();
+    const collectionNames = await db.listCollections().toArray();
+    for (const { name } of collectionNames) {
+      await db.collection(name).deleteMany({});
+    }
+  }
+
+}
+
 async function close() {
   if (client) {
     await client.close();
@@ -23,15 +34,13 @@ async function close() {
   }
 }
 
-
-
-
-
 let mongoServer;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   process.env.mongoDbUrl = await mongoServer.getUri();
+  await clearAllCollections ();
+
 });
 
 afterAll(async () => {
@@ -42,7 +51,14 @@ afterAll(async () => {
 describe('MongoDB connection', () => {
   test('connects to MongoDB', async () => {
     const db = await connect();
+    await clearAllCollections();
     const collections = await db.listCollections().toArray();
-    // expect(collections.).toEqual([]);
+    expect(Array.isArray(collections)).toBe(true);
   });
 });
+
+module.exports = {
+  connect,
+  clearAllCollections,
+  close,
+};
