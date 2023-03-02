@@ -55,9 +55,8 @@ describe("POST /users", () => {
 describe("GET /users", () => {
   test("GET a new user", async () => {
     
-    const response = await request(app).get("/users").expect(200);
+    await request(app).get("/users").expect(200);
 
-  
   });
 });
 
@@ -66,7 +65,7 @@ describe("GET /usersbyid", () => {
 
     const user  = createUser();
     const response = await request(app).post("/users").send(user).expect(201);
-    const rp = await request(app).get( `/users/${response.body.id}`).expect(200)
+    await request(app).get( `/users/${response.body.id}`).expect(200)
   });
 });
 describe("put/usersbyid", () => {
@@ -75,8 +74,7 @@ describe("put/usersbyid", () => {
     
     const user  = createUser();
     const response = await request(app).post("/users").send(user).expect(201);
-      
-    const rp = await request(app).put( `/users/${response.body.id}`).send({firstName:"Name2"}).expect(204);
+    await request(app).put( `/users/${response.body.id}`).send({firstName:"Name2"}).expect(204);
 
   
   });
@@ -86,14 +84,14 @@ describe("delete/usersbyid", () => {
   test("delete user by id", async () => {
     const user  = createUser();
     const response = await request(app).post("/users").send(user).expect(201);
-    const rp = await request(app).delete( `/users/${response.body.id}`).expect(204);
+    await request(app).delete( `/users/${response.body.id}`).expect(204);
   });
 });
 
 describe("POST/auth", () => {
   test("creates a new user", async () => {
     const user  = createUser();
-    const resp = await request(app).post("/users").send(user).expect(201);
+    await request(app).post("/users").send(user).expect(201);
     const response = await request(app).post("/auth").send({
       username : user.userName,
       password : user.password
