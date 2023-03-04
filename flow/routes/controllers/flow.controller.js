@@ -1,5 +1,5 @@
 const axios = require("axios");
-const flowModel = require("../models/flows.model");
+const flowModel = require("../models/flow.model");
 
 
 /*

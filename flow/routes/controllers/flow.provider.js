@@ -1,10 +1,10 @@
-const flowModel = require("../models/flows.model");
-const controller = require("../controllers/flows.controller");
+const flowModel = require("../models/flow.model");
+const controller = require("../controllers/flow.controller");
 const jwt = require("jsonwebtoken")
 exports.insert =  (req, res) => {
   flowModel.create(req.body).then((result) => {
     if(result){
-        req.jwt = jwt.decode(req.headers["authorization"].split(" ")[1]);
+       //req.jwt = jwt.decode(req.headers["authorization"].split(" ")[1]);
         req._id = result._id;
         controller.create(res,req);
     }else {
@@ -36,7 +36,7 @@ exports.list = (req, res) => {
 /// This one is used in order to load the flow in the node red ! 
 exports.getById = (req, res) => {
   flowModel.findById(req.params.id).then((result) => {
-    req.jwt = jwt.decode(req.headers["authorization"].split(" ")[1]);
+    //req.jwt = jwt.decode(req.headers["authorization"].split(" ")[1]);
     req._id = result._id;
     req.body.flowData = result.flowData;
     controller.insert(req,res)

@@ -1,5 +1,5 @@
 
-const flowProvider = require('./controllers/flows.provider');
+const flowProvider = require('./controllers/flow.provider');
 
 exports.routesConfig = (app) => {
     app.post('/flow', [
