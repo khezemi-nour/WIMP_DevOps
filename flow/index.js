@@ -1,12 +1,12 @@
-const app = require("./app")
-const PORT = process.env.PORT || 3001;
+const { app, RED , server }  = require("./app")
+const PORT = process.env.PORT || 8000;
 
 // listening
-app.listen(PORT ,()=> {
+server.listen(PORT ,()=> {
     console.log("flow service running on port :" + PORT);
 })
 
-app.on('error',(error) => {
+server.on('error',(error) => {
     if (error) {
         console.error(error);
         return process.exit(1)
@@ -14,3 +14,5 @@ app.on('error',(error) => {
         console.log('express main configured  and listening on port:.')
     }
 });
+
+RED.start();

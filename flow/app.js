@@ -1,22 +1,73 @@
 const express = require('express');
-const app = express();
+let app = express();
+let RED = require("node-red");
+let http = require('http');
+
 const bodyParser = require('body-parser');
 
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin','*' );
-    res.header('Access-Control-Allow-Methods', 'GET,GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Expose-Headers', 'Content-Length');
-    res.header('Access-Control-Allow-Headers', 'Origin,Accept, Authorization, Content-Type, X-Requested-With, Range,X-Auth');
-    if (req.method == 'OPTIONS') {
-        res.sendStatus(200);
-      }
-      else {
-        next();
-      }
-    });
+var server = http.createServer(app);
+// Create the settings object - see default settings.js file for other options
+var settings = {
+    httpAdminRoot:"/red",
+    httpNodeRoot: "/api",
+    httpNodeCors: true,
+    userDir:"/home/nol/.nodered/",
+    functionGlobalContext: { 
+        os:require('os')
+    }    // enables global context
+};
+// Initialise the runtime with a server and settings
+RED.init(server,settings);
+
+// Serve the editor UI from /red
+app.use(settings.httpAdminRoot, RED.httpAdmin);
+
+// Serve the http nodes UI from /api
+app.use(settings.httpNodeRoot,RED.httpNode);
 app.use(bodyParser.json());
 app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
   });
 
-module.exports = app;
+module.exports = { app, RED ,server };
+
+
+
+
+// var http = require('http');
+// var express = require("express");
+// const { consumer } = require("./messaging/flows.messaging");
+// const permissions = require("./security/flow.permission")
+// const flowRouter = require("./routes/route.config");
+// const bodyParser = require('body-parser');
+// require('dotenv').config()
+// Create an Express app
+// var app = express();
+// body parser 
+// app.use(bodyParser.json());
+// /// add api to to the app
+// flowRouter.routesConfig(app);
+// // Create a server
+// var server = http.createServer(app);
+// // Create the settings object - see default settings.js file for other options
+// var settings = {
+//     httpAdminRoot:"/red",
+//     httpNodeRoot: "/api",
+//     httpNodeCors: true,
+//     userDir:"/home/nol/.nodered/",
+//     functionGlobalContext: { 
+//         os:require('os')
+//     }    // enables global context
+// };
+
+
+
+// /// Connection to Broker RabbitMQ
+// consumer()
+
+
+// server.listen(8000);
+// // Connecting to the broker 
+// //broker.connect();
+// // Start the runtime
+// RED.start();
