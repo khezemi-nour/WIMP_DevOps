@@ -42,10 +42,10 @@ exports.findById = (id) => {
     })
 }
 
-exports.create = (data) => {
+exports.create = async (data) => {
     const flow = new Flow(data);
     try{
-        return  flow.save(); 
+        return await flow.save(); 
     }catch(err){
         return new Promise((resolve,reject) => resolve(null));
     }
