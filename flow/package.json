@@ -19,7 +19,11 @@
     "node-cache": "^5.1.2",
     "node-red": "^1.2.3",
     "portfinder": "^1.0.32",
-    "rxjs": "^7.6.0"
+    "rxjs": "^7.6.0",
+    "mongoose": "^7.0.0",
+    "superagent": "^8.0.9",
+    "supertest": "^6.3.3",
+    "wait-on": "^7.0.1"
   },
   "devDependencies": {
     "jest": "^29.4.3",
