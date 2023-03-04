@@ -31,7 +31,6 @@ jobs:
       - run: cd gateway && npm install
       - run: cd gateway && npm test
   users:
-
     docker:
       - image: circleci/node:16
       - image: circleci/mongo:latest
@@ -71,6 +70,46 @@ jobs:
           command: |
             cd users
             npm test
+  flow:
+    docker:
+      - image: circleci/node:16
+      - image: circleci/mongo:latest
+    working_directory: ~/repo
+    environment:
+      mongoDbUrl: mongodb://localhost:27017/test
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Waiting for Mongo
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      # - run:
+      #     name: Install mongo client
+      #     command: |
+      #       sudo apt-get install -y mongodb
+      - checkout
+      - when:
+          condition:
+            equal: [ main, flow-service-v1 ]
+          steps:
+            - run: echo "I am on main"
+      - run:
+          name: Install Dependencies
+          command: |
+            cd flow
+            npm install
+      # - run:
+      #     name: Wait for MongoDB to start
+      #     command: |
+      #       cd users
+      #       npm run wait-for-mongo
+      - run:
+          name: Wait for MongoDB to start
+          command: dockerize -wait tcp://localhost:27017 -timeout 1m
+      - run:
+          name: Run tests
+          command: |
+            cd flow
+            npm test
 
   say-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -93,3 +132,4 @@ workflows:
       - say-hello
       - gateway
       - users
+      - flow
