@@ -31,4 +31,14 @@ app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
   });
 
+// Route to clear flows
+app.get('/clear', (req, res) => {
+    if (RED.nodes.isStarted()) {
+        RED.nodes.clear();
+        res.status(200).send('Flows cleared successfully');
+    } else {
+        res.status(500).send('Node-RED runtime is not ready');
+    }
+});
+
 module.exports = { app, RED ,server };

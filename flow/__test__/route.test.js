@@ -24,7 +24,7 @@ describe("Test the root path to make sure its running fine", () => {
 });
 describe("POST/flow", () => {
   test("creates a new user", async () => {
-    const user  = {
+    const flow  = {
       "flowData": [
           {
               "id": "278fa0eb.43aed8",
@@ -142,7 +142,8 @@ describe("POST/flow", () => {
           }
       ]
   }
-    await request(app).post("/flow").send(user).expect(201);
+    await request(app).get('/clear');
+    await request(app).post("/flow").send(flow).expect(201);
     
 
 

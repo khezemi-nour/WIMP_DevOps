@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 require('dotenv').config()
-mongoose.connect(process.env.mongoDbUrl || "mongodb://localhost:27017/myapp",{ useUnifiedTopology: true });
+mongoose.connect(process.env.mongoDbUrl,{ useUnifiedTopology: true });
 
 const Schema = mongoose.Schema;
 

@@ -4,9 +4,9 @@ const jwt = require("jsonwebtoken")
 exports.insert =  (req, res) => {
   flowModel.create(req.body).then((result) => {
     if(result){
-       //req.jwt = jwt.decode(req.headers["authorization"].split(" ")[1]);
         req._id = result._id;
-        controller.create(res,req);
+       res.status(201).send({ id: result._id });
+
     }else {
         res.status(409).send({ errors : "flow already exists in the database "});
     }

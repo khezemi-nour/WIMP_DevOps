@@ -16,7 +16,7 @@ create_flow_data = (req) => {
   // check if _data is an array
   return {
     id: req._id,
-    label: req.jwt.name.split(" ")[0],
+    label: 'req.jwt.name.split(" ")[0]',
     nodes: Array.isArray(req.body.flowData) ? req.body.flowData : Array(req.body.flowData),
   };
 };
@@ -26,9 +26,9 @@ exports.create = async (res, req) => {
       process.env.FLOW_URL,
       create_flow_data(req)
     );
-    await flowModel.pathFlowById( req._id, { flowId : result.data.id});
     res.status(201).send({ id: req.id, flowId: result.data.id });
   } catch (error) {
+    console.log(error)
     res.status(409).send({
       errors:
         error && error.response && error.response.data
