@@ -1,0 +1,11 @@
+.background {
+  viewport-fit: fb-cyan;
+}
+
+#demotext {
+  fill: black;
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: bold;
+  text-anchor: middle;
+}

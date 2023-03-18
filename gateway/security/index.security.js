@@ -25,7 +25,7 @@ exports.setupAuth = (app, routes) => {
 
   app.use(
     session({
-      secret: "XoR?qWvo:RYM,iX;2Tz_>{++gGIP16",
+      secret:config.session ,
       resave: false,
       saveUninitialized: true,
       store: memoryStore,
