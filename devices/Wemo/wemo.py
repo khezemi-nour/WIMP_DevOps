@@ -16,20 +16,20 @@ class Wemo(Resource):
         target =  get_wemo_device_by_name(request.args.get('name') or 'Concordia')
         
         if target is None :     
-            return jsonify({'error': 'Wemo device not found'}),404
+            return {'error': 'Wemo device not found'}
         for device in devices:
             if device.name == target['name']:
                 wemo = device
                 break
         else:
-            return jsonify({'error': 'Wemo device not found'}),404
+            return {'error': 'Wemo device not found'}
         action = request.args.get('action')
         if action == 'on':
             wemo.on()
-            return jsonify({'status': 'on'}),200
+            return {'status': 'on'}
         elif action == 'off':
             wemo.off()
-            return jsonify({'status': 'off'}),200
+            return {'status': 'off'}
         else:
-            return jsonify({'error': 'Invalid action'}),204
+            return {'error': 'Invalid action'}
 

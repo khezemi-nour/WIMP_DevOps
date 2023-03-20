@@ -7,12 +7,12 @@ from flask import request,jsonify
 class Temperature(Resource):
     def get(self): 
         try: 
-            if(request.args.get('unit') is 'C'): 
+            if(request.args.get('unit') == 'C'): 
                 return jsonify({'value':Read.read_temp_c}),200
             else : 
                 return jsonify({'value':Read.read_temp_f}),200
-        except : 
-            return jsonify({'message':'something went wrong'}),500
+        except Exception as ex : 
+            return jsonify({'message':'something went wrong' + ex }),500
         
 class Read():
     def __init__(self) -> None:

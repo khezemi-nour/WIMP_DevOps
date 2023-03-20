@@ -38,9 +38,6 @@ class TestWemoControl(unittest.TestCase):
         database.create_wemo_devices_table()
         database.create_wemo_device('Concordia', 'Switch')
 
-    def tearDown(self):
-        pass
-
     @unittest.skip("demonstrating how to skip a test")
     def test_turn_on_wemo_device(self):
         response = self.client.get('/wemo?action=on&name=Concordia')

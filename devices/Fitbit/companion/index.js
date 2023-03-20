@@ -17,7 +17,6 @@ console.log("Companion Running ");
 //   console.log(error);}); // Log any errors with Fetch
 
 
-const expressAPIUrl = "http://192.168.0.200/node/fitbit";
 let firebaseTestURL = "https://wimp-project-63c97-default-rtdb.firebaseio.com";
 /// ------------------------ You change you firabase url here ------------------------------------------////
 let firebaseEndpoint = ""
@@ -45,29 +44,6 @@ function sendMessageToExpress(topic,data){
         console.log("Error from server: " + error);
       });
 }
-
-
-
-
-// function sendMessageToExpress(message) {
-//   fetch(expressAPIUrl , {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: message
-//   })
-//     .then(response => {
-//       console.log("Response from server: " + response.status);
-//       return response.json();
-//     })
-//     .then(data => {
-//       console.log("Response from server: " + JSON.stringify(data));
-//     })
-//     .catch(error => {
-//       console.log("Error from server: " + error);
-//     });
-// }
 
 /// On message received from the device application
 peerSocket.addEventListener("message", (evt) => {
