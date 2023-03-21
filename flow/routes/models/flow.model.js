@@ -47,7 +47,7 @@ exports.create = async (data) => {
     try{
         return await flow.save(); 
     }catch(err){
-        return new Promise((resolve) => resolve(null));
+        return Promise.resolve(null);
     }
 
 }
