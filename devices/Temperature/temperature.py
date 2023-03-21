@@ -8,11 +8,11 @@ class Temperature(Resource):
     def get(self): 
         try: 
             if(request.args.get('unit') == 'C'): 
-                return jsonify({'value':Read.read_temp_c}),200
+                return {'value':Read.read_temp_c}
             else : 
-                return jsonify({'value':Read.read_temp_f}),200
+                return {'value':Read.read_temp_f}
         except Exception as ex : 
-            return jsonify({'message':'something went wrong' + ex }),500
+            return {'message':'something went wrong' + ex }
         
 class Read():
     def __init__(self) -> None:
