@@ -47,7 +47,7 @@ jobs:
             # to get the Dockerfile from the current directory.
             # <docker_hub_username/docker-hub-password:version>.
           name: Build Docker image
-          command: docker build -t yahiafellah/circleci-repos:v1 .
+          command: cd gateway && docker build -t yahiafellah/circleci-repos:v1 .
       - run:
           # Pushes the Docker image you created to the Docker Hub.
           # Replace khabdrick/circleci-tutorial:v1 with the 
