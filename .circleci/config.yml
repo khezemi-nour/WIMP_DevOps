@@ -47,12 +47,12 @@ jobs:
             # <docker_hub_username/docker-hub-password:version>.
           name: Build Docker image
           command: docker build -t yahiafellah/circleci-repos:v1 .
-    - run:
-        # Pushes the Docker image you created to the Docker Hub.
-        # Replace khabdrick/circleci-tutorial:v1 with the 
-				# <docker_hub_username/docker-hub-password:version> you used to build the image above
-        name: Push to Docker Hub
-        command: |
+      - run:
+          # Pushes the Docker image you created to the Docker Hub.
+          # Replace khabdrick/circleci-tutorial:v1 with the 
+          # <docker_hub_username/docker-hub-password:version> you used to build the image above
+          name: Push to Docker Hub
+          command: |
             docker login -u yahiafellah -p _S!-LqkkWCtu9ry
             docker push yahiafellah/circleci-repos:v1
   users:
