@@ -47,7 +47,7 @@ jobs:
             # to get the Dockerfile from the current directory.
             # <docker_hub_username/docker-hub-password:version>.
           name: Build Docker image
-          command: cd gateway && docker build -t yahiafellah/circleci-repos:v1 .
+          command: cd gateway && docker build -t yahiafellah/circleci-repos:gateway-v1 .
       - run:
           # Pushes the Docker image you created to the Docker Hub.
           # Replace khabdrick/circleci-tutorial:v1 with the 
@@ -55,7 +55,7 @@ jobs:
           name: Push to Docker Hub
           command: |
             docker login -u yahiafellah -p _S!-LqkkWCtu9ry
-            docker push yahiafellah/circleci-repos:v1
+            docker push yahiafellah/circleci-repos:gateway-v1
   users:
     docker:
       - image: circleci/node:16
@@ -64,7 +64,6 @@ jobs:
     environment:
       mongoDbUrl: mongodb://localhost:27017/test
     steps:
-      - setup_remote_docker
       - run:
           name: Waiting for Mongo
           command: dockerize -wait tcp://localhost:27017 -timeout 1m
@@ -96,6 +95,22 @@ jobs:
           command: |
             cd users
             npm test
+      - setup_remote_docker
+      - run:
+            # Builds a docker image to push to Docker Hub
+            # Tag (-t) pattern is below, where CircleCI 
+            # to get the Dockerfile from the current directory.
+            # <docker_hub_username/docker-hub-password:version>.
+          name: Build Docker image
+          command: cd users && docker build -t yahiafellah/circleci-repos:users-v1 .
+      - run:
+          # Pushes the Docker image you created to the Docker Hub.
+          # Replace khabdrick/circleci-tutorial:v1 with the 
+          # <docker_hub_username/docker-hub-password:version> you used to build the image above
+          name: Push to Docker Hub
+          command: |
+            docker login -u yahiafellah -p _S!-LqkkWCtu9ry
+            docker push yahiafellah/circleci-repos:users-v1
   flow:
     docker:
       - image: circleci/node:16
