@@ -1,0 +1,11 @@
+{
+  "useWorkspaces": true,
+  "packages": [
+    "gateway",
+    "users",
+    "device",
+    "flow"
+  ],
+  "version": "independent"
+
+}

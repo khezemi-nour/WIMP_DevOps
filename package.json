@@ -1,0 +1,21 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "packages": [
+      "gateway",
+      "users",
+      "device",
+      "flow"
+    ]
+  },
+  "scripts": {
+    "start": "lerna exec --no-bail --parallel -- npm start"
+  },
+  "devDependencies": {
+    "lerna": "^6.6.2"
+  }
+}
