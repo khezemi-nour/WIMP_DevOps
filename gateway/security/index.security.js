@@ -44,7 +44,7 @@ exports.setupAuth = (app, routes) => {
 };
 
 exports.setupAuthentication = (app, routes) => {
-  var memoryStore = new session.MemoryStore();
+  const memoryStore = new session.MemoryStore();
   app.use(
     session({
       secret: "XoR?qWvo:RYM,iX;2Tz_>{++gGIP16",

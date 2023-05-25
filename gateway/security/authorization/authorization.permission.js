@@ -21,7 +21,7 @@ exports.onlySameUserOrAdminCanDoThisAction = (req, res, next) => {
 
     let user_permission_level = parseInt(req.jwt.roles);
     let userId = req.jwt.userId;
-    if (req.params && req.params.userId && userId === req.params.userId) {
+    if (req?.params && req.params.userId && userId === req.params.userId) {
         return next();
     } else {
         if (user_permission_level & Master) {
