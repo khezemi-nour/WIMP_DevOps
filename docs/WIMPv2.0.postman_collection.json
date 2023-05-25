@@ -1,0 +1,889 @@
+{
+	"info": {
+		"_postman_id": "63611082-3946-4fbe-b67d-2b8fe375eb0b",
+		"name": "WIMPv2.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Get List of Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users/636bd093b04c87acc09ec39a",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users",
+								"636bd093b04c87acc09ec39a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"firstName\": \"admin3\",\r\n  \"lastName\": \"admin3\",\r\n  \"userName\": \"admin3\",\r\n  \"password\": \"admin3\",\r\n  \"permissionLevel\": 1\r\n\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flows\":[\r\n        \"test\",\r\n        \"test1\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users/636bd093b04c87acc09ec39a",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users",
+								"636bd093b04c87acc09ec39a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch User ( flows )",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flow\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users/?id=636bd093b04c87acc09ec39a",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "636bd093b04c87acc09ec39a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch User ( devices )",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flow\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users/?id=636bd093b04c87acc09ec39a",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "636bd093b04c87acc09ec39a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/users/636295c1d99ac50a14020de8",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"users",
+								"636295c1d99ac50a14020de8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// var gatewayUrl = pm.collectionVariables.get(\"gateway_url\");\r",
+									"// var apiPrefix = pm.collectionVariables.get(\"api_prefix\");\r",
+									"// pm.sendRequest({\r",
+									"//     url:`${gatewayUrl}/${apiPrefix}/auth`,\r",
+									"//     method:\"POST\",\r",
+									"//     header:{\r",
+									"//         'content-type':'application/json'\r",
+									"//    },\r",
+									"//    body:{\r",
+									"//        mode:'raw',\r",
+									"//        raw:JSON.stringify({\r",
+									"//     \"username\":\"admin\",\r",
+									"//     \"password\":\"admin\"\r",
+									"// })}\r",
+									"// },(err,res) => { \r",
+									"//     console.log(res.json());\r",
+									"//     pm.collectionVariables.set(\"accessToken\",res.json().accessToken) \r",
+									"//     } )"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token_var}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/auth",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"+k0kt+1uriQFBj/ZAJcC1Q==$QwiKumaUiB3BDKn5RCZizMH5zUURzx3Bto3Hx7S6w8XwSHm2HL2Uu8ed/8Ovd7itUfXPlzIu4LxLCOOKoUBt+Q==\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/refresh",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Flows",
+			"item": [
+				{
+					"name": "Create & Insert flow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"flowData\": [\r\n        {\r\n            \"id\": \"278fa0eb.43aed8\",\r\n            \"type\": \"function\",\r\n            \"name\": \"broker def node\",\r\n            \"func\": \"// pass in: msg.parameters.broker\\n\\nnode_type = \\\"mqtt-broker\\\";\\nmsg.id = msg.id + 1;\\n\\nmsg.payload.push({\\n        id: msg.id,\\n        type: node_type,\\n        broker: msg.parameters.broker,\\n        port: \\\"1883\\\"\\n      });\\n\\n// store the broker def ID so we can refer to it in the output node\\nmsg.defs = {broker: msg.id,\\n \\t\\t\\t// how far apart are nodes horizontally\\n     \\t \\tspacing: 150}; \\n\\n\\nreturn msg;\",\r\n            \"outputs\": 1,\r\n            \"x\": 441,\r\n            \"y\": 191,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"15e5103c.e73b7\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"da8f9fca.854188\",\r\n            \"type\": \"inject\",\r\n            \"name\": \"parameters\",\r\n            \"topic\": \"\",\r\n            \"payload\": \"{\\\"broker\\\":\\\"localhost\\\",\\\"input\\\":\\\"source_topic\\\",\\\"output\\\":\\\"destination_topic\\\",\\\"process\\\":\\\"msg.payload = \\\\\\\"* \\\\\\\"+msg.payload+\\\\\\\" *\\\\\\\";\\\\nreturn msg;\\\"}\",\r\n            \"repeat\": \"\",\r\n            \"crontab\": \"\",\r\n            \"once\": false,\r\n            \"x\": 150,\r\n            \"y\": 131,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"50abf75f.4e47f8\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"50abf75f.4e47f8\",\r\n            \"type\": \"function\",\r\n            \"name\": \"initialise\",\r\n            \"func\": \"// create the parameters object from the incoming JSON object\\nconsole.log(msg.payload);\\nmsg.parameters = JSON.parse(msg.payload);\\n\\n// we're going to create an array of objects\\nmsg.payload = [];\\nmsg.id = 0;\\n\\nreturn msg;\",\r\n            \"outputs\": 1,\r\n            \"x\": 292,\r\n            \"y\": 131,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"278fa0eb.43aed8\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"15e5103c.e73b7\",\r\n            \"type\": \"function\",\r\n            \"name\": \"MQTT in node\",\r\n            \"func\": \"// pass in msg.parameters.input\\n\\nnode_type = \\\"mqtt in\\\";\\nprevious_id = msg.id;\\n\\nmsg.id = msg.id + 1;\\n\\nmsg.payload.push({\\n        id: msg.id,\\n        type: node_type,\\n        topic: msg.parameters.input,\\n        broker: msg.defs.broker,\\n        name: \\\"input\\\",\\n\\t\\tx: 100,\\n\\t\\ty: 100,\\n\\t\\twires: []\\n      });\\n\\nreturn msg;\",\r\n            \"outputs\": 1,\r\n            \"x\": 461,\r\n            \"y\": 235,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"5231e2ad.f01a3c\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"5231e2ad.f01a3c\",\r\n            \"type\": \"function\",\r\n            \"name\": \"function node\",\r\n            \"func\": \"// pass in msg.parameters.process\\n\\nnode_type = \\\"function\\\";\\nprevious_id = msg.id;\\n\\nmsg.id = msg.id + 1;\\n\\n// fill in the wires link in previous node\\nmsg.payload[msg.payload.length-1].wires.push([msg.id]);\\nnew_x = msg.payload[msg.payload.length-1].x + msg.defs.spacing;\\nnew_y = msg.payload[msg.payload.length-1].y;\\n\\nmsg.payload.push({\\n        id: msg.id,\\n        type: node_type,\\n        name: \\\"process\\\",\\n        func: msg.parameters.process,\\n        outputs: 1,\\n\\t\\tx: new_x,\\n\\t\\ty: new_y,\\n\\t\\twires: []\\n      });\\n\\nreturn msg;\",\r\n            \"outputs\": 1,\r\n            \"x\": 486,\r\n            \"y\": 279,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"8cf45583.109bf8\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"8cf45583.109bf8\",\r\n            \"type\": \"function\",\r\n            \"name\": \"MQTT out node\",\r\n            \"func\": \"// pass in msg.parameters.output\\n \\t\\t   \\n\\nnode_type = \\\"mqtt out\\\";\\nprevious_id = msg.id;\\n\\nmsg.id = msg.id + 1;\\n\\n// fill in the wires link in previous node\\nmsg.payload[msg.payload.length-1].wires.push([msg.id]);\\nnew_x = msg.payload[msg.payload.length-1].x + msg.defs.spacing;\\nnew_y = msg.payload[msg.payload.length-1].y;\\n\\n\\nmsg.payload.push({\\n        id: msg.id,\\n        type: node_type,\\n        topic: msg.parameters.output,\\n        broker: msg.defs.broker,\\n        name: \\\"output\\\",\\n\\t\\tx: new_x,\\n\\t\\ty: new_y,\\n\\t\\twires: []\\n      });\\n\\nreturn msg;\",\r\n            \"outputs\": 1,\r\n            \"x\": 515,\r\n            \"y\": 326,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": [\r\n                [\r\n                    \"a3f81690.493398\"\r\n                ]\r\n            ]\r\n        },\r\n        {\r\n            \"id\": \"a3f81690.493398\",\r\n            \"type\": \"debug\",\r\n            \"name\": \"\",\r\n            \"active\": true,\r\n            \"complete\": \"false\",\r\n            \"x\": 673,\r\n            \"y\": 326,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": []\r\n        },\r\n        {\r\n            \"id\": \"485c51ed.6013b8\",\r\n            \"type\": \"comment\",\r\n            \"name\": \"generate \\\"mqtt - process - mqtt\\\" flow\",\r\n            \"info\": \"publish  to \\\"configure\\\" topic:\\n\\n{\\n  \\\"broker\\\":\\\"localhost\\\",\\n  \\\"input\\\":\\\"source_topic\\\",\\n  \\\"output\\\":\\\"destination_topic\\\",\\n  \\\"process\\\":\\\"msg.payload = \\\\\\\"* \\\\\\\"+msg.payload+\\\\\\\" *\\\\\\\";\\\\nreturn msg;\\\"\\n}\",\r\n            \"x\": 199,\r\n            \"y\": 73,\r\n            \"z\": \"911370d8.e61a48\",\r\n            \"wires\": []\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/flow",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"flow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update flow",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/flow/?id=",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"flow",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get/load flow by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/flow/637af7ea267c50d27dbe3726",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"flow",
+								"637af7ea267c50d27dbe3726"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get/load flow by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{gateway_url}}/{{api_prefix}}/flow/637c04e5f15bcda8d55747b7",
+									"host": [
+										"{{gateway_url}}"
+									],
+									"path": [
+										"{{api_prefix}}",
+										"flow",
+										"637c04e5f15bcda8d55747b7"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Content-Length"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Accept, Authorization, Content-Type, X-Requested-With, Range,X-Auth"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "38"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"26-sUNTlOudY3xJVB9ZecQ5n+InVkM\""
+								},
+								{
+									"key": "date",
+									"value": "Mon, 21 Nov 2022 23:12:02 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"flow loaded successfully\"\n}"
+						},
+						{
+							"name": "Get/load flow by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{gateway_url}}/{{api_prefix}}/flow/637af7ea267c50d27dbe3726",
+									"host": [
+										"{{gateway_url}}"
+									],
+									"path": [
+										"{{api_prefix}}",
+										"flow",
+										"637af7ea267c50d27dbe3726"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Content-Length"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Accept, Authorization, Content-Type, X-Requested-With, Range,X-Auth"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "38"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"26-sUNTlOudY3xJVB9ZecQ5n+InVkM\""
+								},
+								{
+									"key": "date",
+									"value": "Mon, 21 Nov 2022 23:12:02 GMT"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"flow loaded successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update all working flows",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/flows/updates",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"flows",
+								"updates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ1cm46eWFoaWEueHl6IiwiYXVkIjoidXJuOnlhaGlhLnh5eiIsIm5hbWUiOiJhZG1pbiBhZG1pbiIsInVzZXJJZCI6IjYzNmJkMDkzYjA0Yzg3YWNjMDllYzM5YSIsInJvbGVzIjoxMDczNzQxODI0LCJqdGkiOiJkMzViZWE2Ny0xMTkwLTQ0MmEtOTJjYS02Mzg2OGIwZTY0ZmYiLCJpYXQiOjE2Njk0MDczMTUsImV4cCI6MTY2OTQxMTM5NX0.ySf4Ywny_XMTFHkVJrx9Y6lXQw9e0dPNGHfiCRqQJGdQ-UK_cjfh7i1h8Rk-7NzGJEVznLSL8sBvTbvvz8G2waAQKtYLaltMQgmR9H_MlH1sdCJbQ5kxnkL5ez5ymqToUzoMvS6Qr-619p8YJRwG7tvSuZUfvsVvh2Vq5Y6w994",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Device",
+			"item": [
+				{
+					"name": "List Device",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/devices",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/devices/63c762b4dd2efec6ad53dc0e",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"devices",
+								"63c762b4dd2efec6ad53dc0e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Device Dimensions: 40mm x 40mm x 11mmWeight: 38g Small band fits wrists from 140 to 170mmLarge band fits wrists from 170 to 220mmScreen Size: 35mmScreen Display: AMOLED full touchscreen, TFTBattery: Lithium-polymer, up to 6 days battery lifeCharge time: Full charge within 2 hoursStorage: 2.5GBFifteen exercise modes preloadedOperating system: Fitbit OSConnectivity: WiFi, Bluetooth 4.0Connected GPS: YesSynchronisation Range: Up to 6 meters away Compatibility: Apple iOS and Android OS Water-resistant to 50mOperating Temperature: -10° to 45°CSensors: Optical heart rate tracker, 3-axis accelerometer, altimeter, ambient light sensor, vibration motor, microphoneMaximum altitude: 8,534mMaterial: Aerospace-grade aluminium case, housing and buckle made of anodised aluminium, with 3-display Corning Gorilla Glass NFC chip: YesFitbit accessories: Box includes tracker with your choice of band size, charging cable \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/devices/63c762b4dd2efec6ad53dc0e",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"devices",
+								"63c762b4dd2efec6ad53dc0e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Fitbit watch\",\r\n    \"type\":\"Watch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/devices",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Departement",
+			"item": [
+				{
+					"name": "List departement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/departement",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"departement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Departement",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"IT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway_url}}/{{api_prefix}}/departement",
+							"host": [
+								"{{gateway_url}}"
+							],
+							"path": [
+								"{{api_prefix}}",
+								"departement"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "gateway_url",
+			"value": "http://localhost:3000",
+			"type": "default"
+		},
+		{
+			"key": "api_prefix",
+			"value": "api/v1",
+			"type": "default"
+		},
+		{
+			"key": "user_url",
+			"value": "http://localhost:3001",
+			"type": "default"
+		},
+		{
+			"key": "fitbit_code",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "device_url",
+			"value": "http://localhost:3006\n",
+			"type": "default"
+		}
+	]
+}
