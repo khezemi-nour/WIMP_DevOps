@@ -1,13 +1,9 @@
-//const config = require('./env.config.js');
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const DeviceRouter = require('./routes/routes.config');
 const  { setupLogging } = require("./utils/logging");
 const path = require('path')
-const { consumer } = require("./messaging/device.messaging");
-
 require('dotenv').config({ path: path.resolve(__dirname, './.env' )});
 const PORT = process.env.PORT || 3006 ;
 app.use(function (req, res, next) {
