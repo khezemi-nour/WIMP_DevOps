@@ -21,6 +21,7 @@ app.use(function (req, res, next) {
       }
     });
 app.use(bodyParser.json());
+// Route definition
 IdentityRouter.routesConfig(app);
 SecurityRouter.routesConfig(app);
 app.get("/", (_req, res) => {
