@@ -1,0 +1,10 @@
+{
+  "name": "temperature",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "py app.py"
+  },
+  "author": "",
+  "license": "ISC"
+}
