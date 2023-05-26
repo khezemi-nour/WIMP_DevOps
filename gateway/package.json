@@ -17,8 +17,8 @@
     "express-rate-limit": "^6.6.0",
     "express-session": "^1.17.3",
     "http-proxy-middleware": "^2.0.6",
-    "jsonwebtoken": "^8.5.1",
-    "keycloak-connect": "^19.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "keycloak-connect": "^21.1.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
   },
