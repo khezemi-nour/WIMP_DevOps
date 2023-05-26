@@ -1,19 +1,21 @@
 {
   "name": "root",
+  "author": "Yahia el fellah",
+  "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "dependencies": {
+  "workspaces": {
     "packages": [
       "gateway",
       "users",
-      "device",
-      "flow"
+      "flow",
+      "IoT/Temperature",
+      "IoT/Wemo"
     ]
   },
   "scripts": {
-    "start": "lerna exec --no-bail --parallel -- npm start"
+    "start": "npm run kill-ports &&  lerna exec --no-bail --parallel -- npm start",
+    "kill-ports": "kill-port --port 3001,8000,3006",
+    "dev": "npm run kill-ports && lerna run dev --parallel"
   },
   "devDependencies": {
     "lerna": "^6.6.2"

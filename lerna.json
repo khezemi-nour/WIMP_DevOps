@@ -3,8 +3,10 @@
   "packages": [
     "gateway",
     "users",
+    "flow",
     "device",
-    "flow"
+    "IoT/Temperature",
+    "IoT/Wemo"
   ],
   "version": "independent"
 
