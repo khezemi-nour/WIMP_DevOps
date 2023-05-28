@@ -1,5 +1,7 @@
-*\node_modules
+*/node_modules
 coverage
 */package-lock.json
+*/dist
 .vscode
 __pycache__
+node_modules
