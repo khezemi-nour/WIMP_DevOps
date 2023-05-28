@@ -1,10 +1,10 @@
-const express = require("express");
-const  { setupLogging } = require("./utils/logging");
-const { setupProxies } = require("./utils/proxy");
-const { setupAuthentication } = require("./security/index.security")
-const { routes } = require("./routes/routes");
-const { setupRateLimit } = require('./utils/rateLimit');
-const { setupBodyParser } = require("./utils/bodyparser");
+import express from "express";
+import { setupLogging } from "./utils/logging";
+import { setupProxies } from "./utils/proxy";
+import { setupAuthentication } from "./security/index.security";
+import { routes } from "./routes/routes";
+import { setupRateLimit } from './utils/rateLimit';
+import { setupBodyParser } from "./utils/bodyparser";
 const config = require('dotenv').config()
 
 const app = express()
@@ -38,4 +38,4 @@ app.get("/", (_req, res) => {
 
   });
 
-module.exports = app;
+export default app;
