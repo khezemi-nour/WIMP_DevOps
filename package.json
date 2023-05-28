@@ -13,9 +13,11 @@
     ]
   },
   "scripts": {
-    "start": "npm run kill-ports &&  lerna exec --no-bail --parallel -- npm start",
+    "start": "lerna exec --no-bail --parallel -- npm start",
+    "build":"lerna exec --no-bail --parallel -- npm run run:build",
     "kill-ports": "kill-port --port 3000,3001,8000,3006",
-    "dev": "npm run kill-ports && lerna run dev --parallel"
+    "run:dev": "npm run kill-ports && lerna run dev --parallel",
+    "run:build":"npm run kill-ports && npm run build "
   },
   "devDependencies": {
     "lerna": "^6.6.2"
