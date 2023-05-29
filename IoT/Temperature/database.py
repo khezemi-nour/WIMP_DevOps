@@ -1,16 +1,17 @@
 import sqlite3
+from datetime import datetime
 
 DB_NAME= 'temperature.db'
 def create_tables():
     """
-    Creates a wemo_status table in the database if it does not exist.
+    Creates a temperature_status table in the database if it does not exist.
 
     Returns:
         None
     """
     conn = sqlite3.connect(DB_NAME)
     conn.execute(
-        "CREATE TABLE IF NOT EXISTS temperature_status (id INTEGER PRIMARY KEY AUTOINCREMENT, status TEXT)")
+        "CREATE TABLE IF NOT EXISTS temperature_status (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp DATE, value_c FLOAT, value_f FLOAT)")
     conn.close()
 
 
@@ -32,7 +33,7 @@ def drop_table(table_name):
     conn.close()
 
 
-def create_wemo_device(name, device_type):
+def create_temperature_feed(value_c,value_f):
     """
     Inserts a new Wemo device with the given name and type into the database.
 
@@ -46,17 +47,40 @@ def create_wemo_device(name, device_type):
     try:
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
+        # Getting the current date and time
+        dt = datetime.now()
+        # getting the timestamp
+        timestamp = datetime.timestamp(dt)
         cursor.execute(
-            'INSERT INTO wemo_device (name, type) VALUES (?, ?)', (name, device_type))
-        device_id = cursor.lastrowid
+            'INSERT INTO temperature_status (timestamp, value_c,value_f) VALUES (?, ?, ?)', (timestamp, value_c,value_f))
+        temperature_id = cursor.lastrowid
         conn.commit()
         conn.close()
-        return device_id
+        return temperature_id
     except sqlite3.Error as error:
-        print('Error creating Wemo device:', error)
+        print('Error creating temperature value:', error)
 
 
-def get_wemo_device_by_name(name):
+def get_lastest_temperature():
+    # Execute the query to retrieve the latest value
+    try: 
+        conn = sqlite3.connect(DB_NAME)
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM temperature_status ORDER BY timestamp DESC LIMIT 1')
+        latest_value = cursor.fetchone()
+        conn.close()
+        if latest_value : 
+            return {
+                'id': latest_value[0],
+                'timestamp': latest_value[1],
+                'value_c': latest_value[2],
+                'value_f':latest_value[3]
+            }
+    except sqlite3.Error as error : 
+        print('Error getting Temperature device:', error)
+
+
+def get_temperature_by_timestamp(timestamp):
     """
     Retrieves a Wemo device from the database by its name.
 
@@ -69,14 +93,14 @@ def get_wemo_device_by_name(name):
     try:
         conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM wemo_device WHERE name = ?', (name,))
-        device = cursor.fetchone()
+        cursor.execute('SELECT * FROM temperature_status WHERE timestamp = ?', (timestamp,))
+        temperature = cursor.fetchone()
         conn.close()
-        if device:
+        if temperature:
             return {
-                'id': device[0],
-                'name': device[1],
-                'type': device[2]
+                'id': temperature[0],
+                'timestamp': temperature[1],
+                'value': temperature[2]
             }
         else:
             return None
