@@ -3,14 +3,15 @@ import glob
 import time
 from flask_restful import Resource
 from flask import request,jsonify
+from database import get_lastest_temperature
 
 class Temperature(Resource):
     def get(self): 
         try: 
             if(request.args.get('unit') == 'C'): 
-                return {'value':Read.read_temp_c}
+                return {'value':Read.get_latest_value['value_c']}
             else : 
-                return {'value':Read.read_temp_f}
+                return {'value':Read.read_temp_f['value_f']}
         except Exception as ex : 
             return {'message':'something went wrong' + ex }
         
@@ -53,3 +54,7 @@ class Read():
             temp_f = (int(temp_string) / 1000.0) * 9.0 / 5.0 + 32.0 # TEMP_STRING IS THE SENSOR OUTPUT, MAKE SURE IT'S AN INTEGER TO DO THE MATH
             temp_f = str(round(temp_f, 1)) # ROUND THE RESULT TO 1 PLACE AFTER THE DECIMAL, THEN CONVERT IT TO A STRING
             return temp_f
+    
+    @staticmethod
+    def get_latest_value(self): 
+            return get_lastest_temperature()
