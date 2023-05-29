@@ -1,6 +1,7 @@
 {
-  "devDependencies": {
-    "@fitbit/sdk": "~4.3.0"
+  "dependencies": {
+    "@fitbit/sdk": "~4.0.0",
+    "@fitbit/sdk-cli": "^1.7.0"
   },
   "fitbit": {
     "appUUID": "8368b90c-4038-47d2-a564-d00535932b1d",
@@ -16,7 +17,8 @@
       "access_activity"
     ],
     "buildTargets": [
-      "mira"
+      "mira",
+      "higgs"
     ],
     "i18n": {
       "en-US": {
@@ -24,5 +26,8 @@
       }
     },
     "defaultLanguage": "en-US"
+  },
+  "scripts": {
+    "build": "fitbit-build"
   }
 }
