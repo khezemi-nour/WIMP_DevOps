@@ -1,4 +1,4 @@
-# Flask App
+# WEMO Service
 
 This repository contains a typical Flask application. The Flask framework is a lightweight web framework for Python that allows you to build web applications quickly and easily.
 
