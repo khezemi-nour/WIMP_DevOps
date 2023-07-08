@@ -1,5 +1,6 @@
 import sqlite3
 
+DB_NAME = 'mydatabase.db'
 
 def create_tables():
     """
@@ -8,7 +9,7 @@ def create_tables():
     Returns:
         None
     """
-    conn = sqlite3.connect('mydatabase.db')
+    conn = sqlite3.connect(DB_NAME)
     conn.execute(
         "CREATE TABLE IF NOT EXISTS wemo_status (id INTEGER PRIMARY KEY AUTOINCREMENT, status TEXT)")
     conn.close()
@@ -24,7 +25,7 @@ def drop_table(table_name):
     Returns:
         None
     """
-    conn = sqlite3.connect('mydatabase.db')
+    conn = sqlite3.connect(DB_NAME)
     cur = conn.cursor()
     cur.execute(f"DROP TABLE IF EXISTS {table_name}")
     conn.commit()
@@ -40,7 +41,7 @@ def create_wemo_devices_table():
         None
     """
     try:
-        conn = sqlite3.connect('mydatabase.db')
+        conn = sqlite3.connect(DB_NAME)
         conn.execute(
             'CREATE TABLE IF NOT EXISTS wemo_device (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type TEXT)')
         conn.close()
@@ -60,7 +61,7 @@ def create_wemo_device(name, device_type):
         int: The ID of the new device.
     """
     try:
-        conn = sqlite3.connect('mydatabase.db')
+        conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
         cursor.execute(
             'INSERT INTO wemo_device (name, type) VALUES (?, ?)', (name, device_type))
@@ -83,7 +84,7 @@ def get_wemo_device_by_name(name):
         dict: A dictionary containing the ID, name, and type of the device.
     """
     try:
-        conn = sqlite3.connect('mydatabase.db')
+        conn = sqlite3.connect(DB_NAME)
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM wemo_device WHERE name = ?', (name,))
         device = cursor.fetchone()
