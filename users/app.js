@@ -23,6 +23,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json());
 // Route definition
 IdentityRouter.routesConfig(app);
+IdentityRouter.routesAdminConfig(app);
 SecurityRouter.routesConfig(app);
 app.get("/", (_req, res) => {
     res.status(200).send("is runnning");

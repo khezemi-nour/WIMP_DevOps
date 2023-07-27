@@ -12,6 +12,19 @@ afterAll(async () => {
   await close();
 });
 
+const user = () => {
+  const firstNames = ["John", "Jane", "Mike", "Emily", "David", "Sarah"];
+  const lastNames = ["Doe", "Smith", "Johnson", "Brown", "Lee", "Wilson"];
+  return {
+    firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
+    lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
+    userName: randomFirstName.toLowerCase() + Math.floor(Math.random() * 100),
+    password: "password" + Math.floor(Math.random() * 1000),
+    permissionLevel: Math.floor(Math.random() * 3) + 1
+  }
+}
+
+
 function createUser() {
   const firstNames = ["John", "Jane", "Mike", "Emily", "David", "Sarah"];
   const lastNames = ["Doe", "Smith", "Johnson", "Brown", "Lee", "Wilson"];

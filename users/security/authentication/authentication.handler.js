@@ -23,7 +23,7 @@ exports.login = (req, res) => {
 
 exports.refresh_token = (req, res) => {
     try {
-        var now = Math.floor(Date.now() / 1000);
+        const now = Math.floor(Date.now() / 1000);
         req.body.iat = now;
         req.body.exp = now + validityTime;
         let token = jwt.sign(req.body,cert, { algorithm: 'RS512'});

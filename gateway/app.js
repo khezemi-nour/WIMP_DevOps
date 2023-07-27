@@ -1,12 +1,15 @@
-import express from "express";
-import { setupLogging } from "./utils/logging";
-import { setupProxies } from "./utils/proxy";
-import { setupAuthentication } from "./security/index.security";
-import { routes } from "./routes/routes";
-import { setupRateLimit } from './utils/rateLimit';
-import { setupBodyParser } from "./utils/bodyparser";
+const webpack = require("webpack");
+const express = require("express");
+const { setupLogging } = require("./utils/logging");
+const { setupProxies } = require("./utils/proxy");
+const { setupAuthentication } = require("./security/index.security");
+const { routes } = require("./routes/routes");
+const { setupRateLimit } = require('./utils/rateLimit');
+const { setupBodyParser } = require("./utils/bodyparser");
 const config = require('dotenv').config()
-
+/**
+ * Declaration of Express object  
+ */
 const app = express()
 ///enabling CORS
 app.use(function (req, res, next) {
@@ -37,5 +40,4 @@ app.get("/", (_req, res) => {
     res.status(200).send("is runnning");
 
   });
-
-export default app;
+module.exports = app;
