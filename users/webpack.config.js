@@ -43,11 +43,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: "security/tls", to: "security/tls" }],
     }),
-    // // Add a plugin to provide more information during build
-    // new webpack.ProgressPlugin((percentage, message) => {
-    //   // This will log the build progress and message to the console
-    //   console.log(`${(percentage * 100).toFixed()}% ${message}`);
-    // }),
+
     new WebpackBar(),
 
   ],
