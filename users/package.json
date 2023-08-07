@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+    "generate-keys":"./security/tls/security_init.sh",
+    "generate-keys:win":"./security/tls/security_init.bat",
     "build": "webpack --mode development --config webpack.config.js",
     "run:build": "yarn build && node ./dist/server.js",
     "run:test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
@@ -25,7 +27,7 @@
     "babel-preset-env": "^1.7.0",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^8.3.0",
     "kerberos": "^2.0.1",
     "mongodb-client-encryption": "^2.9.0",
     "mongoose": "^7.0.0",
