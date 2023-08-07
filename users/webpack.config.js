@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackBar = require('webpackbar');
 
 module.exports = {
@@ -20,6 +21,15 @@ module.exports = {
     __filename: false, // and __filename return blank or /
   },
   externals: [nodeExternals()], // Need this to avoid error when working with Express
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+    ]
+  },
   module: {
     rules: [
       {
