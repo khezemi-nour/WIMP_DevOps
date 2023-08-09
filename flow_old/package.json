@@ -24,7 +24,9 @@
     "rxjs": "^7.6.0",
     "superagent": "^8.0.9",
     "supertest": "^6.3.3",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.0.1",
+    "@grpc/grpc-js": "^1.2.12",
+    "@grpc/proto-loader": "^0.6.1"
   },
   "devDependencies": {
     "jest": "^29.4.3",

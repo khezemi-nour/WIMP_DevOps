@@ -6,8 +6,6 @@ const Schema = mongoose.Schema;
 
 const flowSchema = new Schema({
     userId: String,
-    flowId : String,
-    name : String,
     data :Object
 }
 )

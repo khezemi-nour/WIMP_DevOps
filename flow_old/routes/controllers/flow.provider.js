@@ -1,5 +1,5 @@
 const flowModel = require("../models/flow.model");
-const controller = require("../controllers/flow.controller");
+const controller = require("./flow.controller");
 const jwt = require("jsonwebtoken")
 exports.insert =  (req, res) => {
   flowModel.create(req.body).then((result) => {

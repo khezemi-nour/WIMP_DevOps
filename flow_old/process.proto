@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message NodeProcess {
+    string pid = 1;
+    string port = 2;
+    string userId = 3;
+}
+
+service NodeService {
+    rpc AddProcess (Empty) returns (NodeProcess) {}
+    rpc DeleteProcess (NodeProcessId) returns (Empty) {}
+
+}
+
+message NodeProcessId {
+    string id = 1;
+}
+
+message Empty {}
