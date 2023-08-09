@@ -1,12 +1,15 @@
 const { spawn } = require("child_process");
 const NodeCache = require("node-cache");
 const cache = new NodeCache(); // create a new cache instance
+const childScriptPath = require('path').resolve(__dirname, 'child.js'); // Adjust the path accordingly
 
 /**
  * Start A Node Red Instance
  */
 exports.start = () => {
-  const process = spawn("node", ["./controller/child.js"], {
+
+  console.log(childScriptPath);
+  const process = spawn("node", [childScriptPath], {
     stdio: 'inherit', // This will use the same stdio as the parent process
     shell: true, // Use shell to execute the command
   });

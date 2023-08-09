@@ -1,6 +1,6 @@
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-const PROTO_PATH = "./proto/process.proto";
+const PROTO_PATH = "../proto/process.proto";
 
 const options = {
   keepCase: true,

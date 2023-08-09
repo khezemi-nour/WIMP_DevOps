@@ -47,6 +47,7 @@ function startGrpcServer(serverlink) {
             // Add gRPC methods for NodeService
             server.addService(service, {
               NewProcess: (_, callback) => {
+                console.log("here");
                 const result = manager.start();
                 callback(null, result);
               },
