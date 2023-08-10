@@ -29,10 +29,7 @@ flowSchema.findById = function (cb) {
 const Flow = mongoose.model("flows", flowSchema);
 
 exports.findById = (id) => {
-  return Flow.findById({ userId: id }).then((result) => {
-    result = result.toJSON();
-    delete result.__id;
-    delete result.__v;
+  return Flow.findOne({ userId: id }).then((result) => {
     return result;
   });
 };

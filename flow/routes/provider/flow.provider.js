@@ -12,7 +12,6 @@ exports.list = async () => {
   return await flowModel.list(limit, page);
 };
 
-/// This one is used in order to load the flow in the node red !
 exports.getById = async (id) => {
   return await flowModel.findById(id);
 };

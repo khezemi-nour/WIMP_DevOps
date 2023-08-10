@@ -47,8 +47,12 @@ function startGrpcServer(serverlink) {
             // Add gRPC methods for NodeService
             server.addService(service, {
               NewProcess: (_, callback) => {
-                console.log("here");
-                const result = manager.start();
+                const result = manager.start(null);
+                callback(null, result);
+              },
+              NewProcessForClient: async (data, callback) => {
+                const filename = await manager.getFlow(data.request.UserId);
+                const result = manager.start(filename);
                 callback(null, result);
               },
             });
