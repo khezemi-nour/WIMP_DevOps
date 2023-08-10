@@ -9,6 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   entry: {
     server: "./index.js",
+   // child:"./routes/controller/child.js"
   },
   output: {
     path: path.join(__dirname, "dist"),
