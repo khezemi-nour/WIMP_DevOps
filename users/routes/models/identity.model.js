@@ -16,12 +16,12 @@ const identiySchema = new Schema(
   {
     firstName: String,
     lastName: String,
-    email: String,
     birthday: Date,
     userName: String,
     password: String,
     permissionLevel: Number,
     departement: String,
+    isActive : Boolean,
     status: Array,
     devices: Array,
     noderedInstance: Object,
@@ -61,7 +61,10 @@ exports.findByUserName = (name) => {
 };
 
 exports.createIdentity = (userData) => {
-  console.log(userData);
+  // Update default user data 
+  userData.isActive = true;
+  userData.noderedInstance = null; 
+  
   const user = new Identity(userData);
   return user.save();
 };
