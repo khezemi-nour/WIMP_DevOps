@@ -1,8 +1,8 @@
 const fs = require("fs/promises"); // Using fs promises API
 const path = require("path");
 // Folder name to create
-const folder = "data";
-const folderpath = path.join(__dirname, folder);
+const folder = "./data";
+const folderpath = path.resolve(__dirname, folder);
 
 // Check if a file or folder exists at the given path
 exports.exists = async (filePath) => {
