@@ -19,11 +19,14 @@ const client = new NodeService(
   grpc.credentials.createInsecure()
 );
 
-// client.NewProcess({}, (error, news) => {
-//   console.log(news);
-// });
 client.NewProcessForClient(
   { UserId: "6470d4a18ba660b67833cc17" },
+  (error, news) => {
+    console.log(news);
+  }
+);
+client.NewProcessForClient(
+  { UserId: "6470d4a18ba660b6733cc171" },
   (error, news) => {
     console.log(news);
   }
