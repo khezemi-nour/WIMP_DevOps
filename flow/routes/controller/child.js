@@ -8,12 +8,26 @@ const server = http.createServer(app);
 // Extract command-line argument for userDir
 const [, , flow] = process.argv;
 
+
+
+function getRandomFolderName(length) {
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let folderName = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    folderName += charset.charAt(randomIndex);
+  }
+  return folderName;
+}
+
+const thisProcessFolderName = getRandomFolderName(10)
+
 // Create the settings object based on command-line arguments
 const settings = {
   httpAdminRoot: "/red",
   httpNodeRoot: "/api",
   httpNodeCors: true,
-  userDir: require('path').resolve("../data/"),
+  userDir: require('path').resolve(`./data/${thisProcessFolderName}/`),
   flowFile: flow,
   editorTheme: {
     tours: false, // To disable the welcome tour
