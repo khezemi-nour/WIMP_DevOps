@@ -2,7 +2,43 @@ const fs = require("fs/promises"); // Using fs promises API
 const path = require("path");
 // Folder name to create
 const folder = "./data";
-const folderpath = path.resolve(__dirname, folder);
+const folderPath = path.resolve(__dirname, "../data");
+
+exports.clearFolder = async () => {
+  if (!await this.exists(folderPath)) {
+    console.error(`Folder "${folderPath}" does not exist.`);
+    return;
+  }
+
+  try {
+    const list = await fs.readdir(folderPath);
+    for (const file of list) {
+      const currentPath = path.join(folderPath, file);
+      const stats = await fs.lstat(currentPath);
+      if (stats.isDirectory()) {
+        // Recursively clear subdirectories
+        await this.clearFolder(currentPath);
+      } else {
+        // Remove file
+        await fs.unlink(currentPath);
+        console.log(`Deleted file: ${currentPath}`);
+      }
+    }
+
+    // Do not remove the root folder
+    if (folderPath !== path.resolve(__dirname, "../data")) {
+      await fs.rmdir(folderPath);
+      console.log(`Deleted folder: ${folderPath}`);
+    } else {
+      console.log(`Skipped deleting root folder: ${folderPath}`);
+    }
+  } catch (err) {
+    console.error(`Error while clearing folder "${folderPath}": ${err.message}`);
+  }
+};
+
+
+
 
 // Check if a file or folder exists at the given path
 exports.exists = async (filePath) => {

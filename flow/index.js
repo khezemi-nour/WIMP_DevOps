@@ -2,6 +2,8 @@ const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const manager = require("./routes/controller/manager");
 const flowProvider = require("./routes/provider/flow.provider");
+const utils = require("./utils/fs");
+
 require("dotenv").config({
   path: require("path").resolve(__dirname, "./.env"),
 });
@@ -38,7 +40,8 @@ function startGrpcServer(serverlink) {
             // Add gRPC methods for FlowService
             server.addService(service, {
               Add: (data, callback) => {
-                const result = flowProvider.insert(data);
+                console.log(data.request);
+                const result = flowProvider.insert(data.request);
                 callback(null, result);
               },
             });
@@ -46,13 +49,9 @@ function startGrpcServer(serverlink) {
           case "NodeService":
             // Add gRPC methods for NodeService
             server.addService(service, {
-              NewProcess: (_, callback) => {
-                const result = manager.start(null);
-                callback(null, result);
-              },
               NewProcessForClient: async (data, callback) => {
                 const filename = await manager.getFlow(data.request.UserId);
-                const result = manager.start(filename);
+                const result = manager.start(filename,data.request.UserId);
                 callback(null, result);
               },
             });
@@ -64,6 +63,7 @@ function startGrpcServer(serverlink) {
       }
     }
   });
+
 
   // Bind and start the gRPC server
   server.bindAsync(
@@ -81,6 +81,10 @@ function startGrpcServer(serverlink) {
     }
   );
 }
+
+
+// Clear Data Folder 
+//utils.clearFolder();
 
 // Start the gRPC server with the specified link from environment variable
 startGrpcServer(process.env.GRPC_LINK);

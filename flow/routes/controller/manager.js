@@ -5,6 +5,14 @@ const childScriptPath = require("path").resolve(__dirname, "child.js"); // Adjus
 const utils = require("../../utils/fs");
 const provider = require("../provider/flow.provider");
 
+
+exports.Init = async() => { 
+
+
+
+}
+
+
 exports.getFlow = async (userId) => {
   const filename = `${userId}_user.json`;
 
@@ -15,8 +23,12 @@ exports.getFlow = async (userId) => {
     // Check if file exists in the folder
     if (!(await utils.exists(filename))) {
       const result = await provider.getById(userId);
-      return await utils.createJsonFile(result.data, filename);
-
+      if(result){
+        console.log('userInfo does exist in the database');
+        return await utils.createJsonFile(result.data, filename);
+      }
+      console.log('userInfo does not exist in the database');
+      return require('path').resolve(__dirname, '../../flow.json');
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -27,12 +39,11 @@ exports.getFlow = async (userId) => {
 /**
  * Start A Node Red Instance
  */
-exports.start = (path) => {
-  const process = spawn("node", [childScriptPath,path], {
+exports.start = async (path, userId) => {
+  const process = spawn("node", [childScriptPath, path, userId], {
     stdio: "inherit", // This will use the same stdio as the parent process
     shell: true, // Use shell to execute the command
   });
-  process.unref();
   process.on("error", (err) => {
     console.error("Failed to spawn Node-RED process:", err);
   });
@@ -40,10 +51,13 @@ exports.start = (path) => {
   if (process.pid !== null) {
     console.log("Running the process with PID " + process.pid);
     cache.set(`node-red-${process.pid}`, process);
-    return process;
+    /// Update flow information in database
+    await provider.update(userId, { pid: process.pid });
+    return { userId: userId, isRunning: true };
   }
+
   console.log("Node-RED process is not running");
-  return null;
+  return { userId: userId, isRunning: false };
 };
 /**
  * Kill the Node Process

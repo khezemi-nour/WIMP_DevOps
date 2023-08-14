@@ -11,7 +11,10 @@ const Schema = mongoose.Schema;
 
 const flowSchema = new Schema({
   userId: String,
+  pid: Number, 
+  port : Number,
   data: String,
+  address : String,
 });
 
 flowSchema.virtual("id").get(function () {

@@ -74,7 +74,7 @@ const data = [
   },
 ];
 
-client.Add({ userId: 1, data: JSON.stringify(data) }, (_, res) => {
+client.Add({ userId: '6470d4a18ba660b67833cc17', data: JSON.stringify(data) }, (_, res) => {
   console.log(res);
 });
 

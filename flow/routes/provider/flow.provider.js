@@ -1,8 +1,7 @@
 const flowModel = require("../models/flow.model");
 
 exports.insert = async (data) => {
-  const result = await flowModel.create(data.request);
-  console.log(result);
+  const result = await flowModel.create(data);
   return { id: result._id };
 };
 
@@ -17,5 +16,5 @@ exports.getById = async (id) => {
 };
 
 exports.update = async (id, data) => {
-  return await flowModel.patchFlowByUserId(id, data.request);
+  return await flowModel.patchFlowByUserId(id, data);
 };

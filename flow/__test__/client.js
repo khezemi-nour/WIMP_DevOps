@@ -25,9 +25,3 @@ client.NewProcessForClient(
     console.log(news);
   }
 );
-client.NewProcessForClient(
-  { UserId: "6470d4a18ba660b6733cc171" },
-  (error, news) => {
-    console.log(news);
-  }
-);

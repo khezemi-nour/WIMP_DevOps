@@ -1,9 +1,8 @@
 syntax = "proto3";
 
 message NodeProcess {
-    string pid = 1;
-    string port = 2;
-    string userId = 3;
+    string userId = 1;
+    bool isRunning = 2;
 }
 
 service NodeService {

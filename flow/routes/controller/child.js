@@ -4,9 +4,10 @@ const http = require("http");
 const bodyParser = require("body-parser");
 const app = express();
 const server = http.createServer(app);
+const provider = require('../provider/flow.provider');
 
 // Extract command-line argument for userDir
-const [, , flow] = process.argv;
+const [, , flow, userId] = process.argv;
 
 
 
@@ -61,7 +62,7 @@ app.get("/clear", (req, res) => {
 });
 
 // Get the server's address and port
-server.listen(0, () => {
+server.listen(0, async () => {
   const serverAddress = server.address();
   const serverPort = serverAddress.port;
   console.log(serverAddress);
@@ -70,6 +71,8 @@ server.listen(0, () => {
     "Node-RED URL:",
     `http://${serverAddress.address}:${serverPort}${settings.httpAdminRoot}`
   );
+  
+  await provider.update(userId,{port:serverAddress.port, address:serverAddress.address })
 
   // Start the Node-RED server
   RED.start();
