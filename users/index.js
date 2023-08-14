@@ -1,7 +1,7 @@
 const app = require("./app")
 const config = require('dotenv').config()
 const PORT = process.env.PORT || 3001;
-const manager = require("./management/loop")
+const manager = require("./management/manager")
 
 
 

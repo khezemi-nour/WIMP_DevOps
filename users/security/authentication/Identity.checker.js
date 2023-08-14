@@ -24,7 +24,6 @@ exports.hasAuthValidFields = (req, res, next) => {
 };
 
 exports.isPasswordAndUserMatch = (req, res, next) => {
-    
     IdentityModel.findByUserName(req.body.username)
         .then((user)=>{
              if(!user[0]){

@@ -3,7 +3,7 @@ const config = require("../security/env.config");
 const Surfer = config.permissionLevels.Surfer;
 const Master = config.permissionLevels.Master;
 const request = require("supertest");
-const { createProcessGRPCClient } = require("../routes/communication/client");
+const { createNodeProcess } = require("../routes/communication/client");
 
 exports.AdminInit = async (app) => {
   const userAdmin = {
@@ -29,6 +29,7 @@ exports.AdminInit = async (app) => {
 exports.flow = async () => {
   try {
     while (true) {
+      await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait for 30 seconds
       // Fetch data from the database
       const userList = await IdentityModel.list(0, 100);
       userList.forEach((user) => {
@@ -38,12 +39,14 @@ exports.flow = async () => {
           user.noderedInstance === null
         ) {
           // If user active and there's
-          user.noderedIntance = createProcessGRPCClient(user._id);
+          const result = createNodeProcess(user._id,  (data) => console.log(data)
+          );
+          console.log(result);
+          user.noderedIntance = result.isRunning;
           // Update Database
           IdentityModel.putIdentity(user._id, user);
         }
       });
-      await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait for 5 seconds
     }
   } catch (error) {
     console.error("An error occurred:", error);

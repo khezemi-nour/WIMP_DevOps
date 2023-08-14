@@ -24,7 +24,7 @@ const identiySchema = new Schema(
     isActive : Boolean,
     status: Array,
     devices: Array,
-    noderedInstance: Object,
+    noderedInstance: Boolean,
   },
   { timestamps: true }
 );
@@ -63,7 +63,7 @@ exports.findByUserName = (name) => {
 exports.createIdentity = (userData) => {
   // Update default user data 
   userData.isActive = true;
-  userData.noderedInstance = null; 
+  userData.noderedInstance = false; 
   
   const user = new Identity(userData);
   return user.save();
