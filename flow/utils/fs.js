@@ -38,6 +38,12 @@ exports.clearFolder = async () => {
 };
 
 
+exports.readFile = async(filePath) => {
+  if(this.exists(filePath)){
+    return await fs.readFile(filePath,'utf8')
+  }
+  return null;
+}
 
 
 // Check if a file or folder exists at the given path
