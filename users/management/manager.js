@@ -29,7 +29,6 @@ exports.AdminInit = async (app) => {
 exports.flow = async () => {
   try {
     while (true) {
-      await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait for 30 seconds
       // Fetch data from the database
       const userList = await IdentityModel.list(0, 100);
       userList.forEach((user) => {
@@ -39,14 +38,18 @@ exports.flow = async () => {
           user.noderedInstance === null
         ) {
           // If user active and there's
-          const result = createNodeProcess(user._id,  (data) => console.log(data)
+          createNodeProcess(
+            user._id,
+            async (_, res) =>
+              await IdentityModel.putIdentity(res.userId, {
+                noderedInstance: res.isRunning,
+              })
           );
-          console.log(result);
-          user.noderedIntance = result.isRunning;
           // Update Database
-          IdentityModel.putIdentity(user._id, user);
+          // ;
         }
       });
+      await new Promise((resolve) => setTimeout(resolve, 10000)); // Wait for 30 seconds
     }
   } catch (error) {
     console.error("An error occurred:", error);
