@@ -51,7 +51,8 @@ function startGrpcServer(serverlink) {
             server.addService(service, {
               NewProcessForClient: async (data, callback) => {
                 const filename = await manager.getFlow(data.request.UserId);
-                const result = manager.start(filename,data.request.UserId);
+                const result = await manager.start(filename,data.request.UserId);
+                console.log('returned info' + JSON.stringify(result));
                 callback(null, result);
               },
             });

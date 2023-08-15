@@ -25,15 +25,14 @@ exports.getFlow = async (userId) => {
       if (result) {
         console.log("userInfo does exist in the database");
         return await utils.createJsonFile(result.data, filename);
-      } else { 
+      } else {
         console.log("userInfo does not exist in the database");
         console.log("Add flow information for the userId");
-        if(this.AddTemplate(userId)){
+        if (this.AddTemplate(userId)) {
           this.getFlow(userId);
         }
-
       }
-      
+
       return require("path").resolve(__dirname, "../../template/manager.json");
     }
   } catch (error) {
@@ -60,9 +59,7 @@ exports.start = async (path, userId) => {
     /// Update flow information in database
     await provider.update(userId, { pid: process.pid });
     return { userId: userId, isRunning: true };
-  }
-
-  console.log("Node-RED process is not running");
+  } 
   return { userId: userId, isRunning: false };
 };
 /**
