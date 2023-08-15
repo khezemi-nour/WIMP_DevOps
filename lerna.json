@@ -1,0 +1,13 @@
+{
+  "useWorkspaces": true,
+  "packages": [
+    "gateway",
+    "users",
+    "flow",
+    "device",
+    "IoT/Temperature",
+    "IoT/Wemo"
+  ],
+  "version": "independent"
+
+}
