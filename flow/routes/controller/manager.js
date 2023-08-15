@@ -5,13 +5,12 @@ const childScriptPath = require("path").resolve(__dirname, "child.js"); // Adjus
 const utils = require("../../utils/fs");
 const provider = require("../provider/flow.provider");
 
-
-exports.Init = async() => { 
-
-
-
-}
-
+exports.AddTemplate = async (userId) => {
+  const data = await utils.readFile(
+    require("path").resolve(__dirname, "../../template/flow.json")
+  );
+  return await provider.insert({ userId: userId, data: data });
+};
 
 exports.getFlow = async (userId) => {
   const filename = `${userId}_user.json`;
@@ -23,12 +22,19 @@ exports.getFlow = async (userId) => {
     // Check if file exists in the folder
     if (!(await utils.exists(filename))) {
       const result = await provider.getById(userId);
-      if(result){
-        console.log('userInfo does exist in the database');
+      if (result) {
+        console.log("userInfo does exist in the database");
         return await utils.createJsonFile(result.data, filename);
+      } else { 
+        console.log("userInfo does not exist in the database");
+        console.log("Add flow information for the userId");
+        if(this.AddTemplate(userId)){
+          this.getFlow(userId);
+        }
+
       }
-      console.log('userInfo does not exist in the database');
-      return require('path').resolve(__dirname, '../../flow.json');
+      
+      return require("path").resolve(__dirname, "../../template/manager.json");
     }
   } catch (error) {
     console.error("An error occurred:", error);
